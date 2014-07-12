@@ -18,18 +18,7 @@ require_once( ABSPATH . 'phpseclib/Crypt/Hash.php');
 require_once( ABSPATH . 'phpseclib/Crypt/RSA.php');
 require_once( ABSPATH . 'phpseclib/Crypt/AES.php');
 
-function hash_table_data($db)
-{
-	$columns = $db->query( __FILE__, __LINE__,  __FUNCTION__,  __CLASS__, __METHOD__, "
-		SELECT GROUP_CONCAT( column_name SEPARATOR ',' )
-		FROM information_schema.columns
-		WHERE table_schema = 'FC'
-		AND table_name = '".DB_PREFIX."promised_amount'
-		", 'fetch_one');
-	return $db->query( __FILE__, __LINE__,  __FUNCTION__,  __CLASS__, __METHOD__, "
-		SELECT MD5(GROUP_CONCAT( CONCAT_WS( '#', {$columns}) SEPARATOR '##' )) FROM `".DB_PREFIX."promised_amount`
-		", 'fetch_one');
-}
+require_once( ABSPATH . 'tmp/_fns.php' );
 
 $db = new MySQLidb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
@@ -44,14 +33,16 @@ $transaction_array[3] = 1;
 // currency_id
 $transaction_array[4] = 72;
 // pct
-$transaction_array[5] = 0;
+$transaction_array[5] = 50;
+// type
+$transaction_array[6] = 'cash';
 // sign
-$transaction_array[6] = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
+$transaction_array[7] = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
 
 $block_data['block_id'] = 222;
 $block_data['time'] = time();
 
-$hash1 = hash_table_data($db, 'promised_amount').hash_table_data($db, 'wallets').hash_table_data($db, 'cash_requests');
+$hash1 = hash_table_data($db, 'promised_amount').hash_table_data($db, 'wallets').hash_table_data($db, 'cash_requests').hash_table_data($db, 'log_promised_amount').hash_table_data($db, 'log_wallets').hash_table_data($db, 'points').hash_table_data($db, 'points_status').hash_table_data($db, 'log_points');
 
 $parsedata = new ParseData('', $db);
 $parsedata->transaction_array = $transaction_array;
@@ -65,7 +56,7 @@ $parsedata->new_reduction_init();
 	//$error = $parsedata->new_reduction_rollback_front();
 //}
 
-$hash2 = hash_table_data($db, 'promised_amount').hash_table_data($db, 'wallets').hash_table_data($db, 'cash_requests');
+$hash2 =  hash_table_data($db, 'promised_amount').hash_table_data($db, 'wallets').hash_table_data($db, 'cash_requests').hash_table_data($db, 'log_promised_amount').hash_table_data($db, 'log_wallets').hash_table_data($db, 'points').hash_table_data($db, 'points_status').hash_table_data($db, 'log_points');
 if ($hash1!=$hash2)
 	print 'ERROR';
 
