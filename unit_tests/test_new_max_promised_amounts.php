@@ -3,15 +3,12 @@ define( 'DC', TRUE);
 define( 'ABSPATH', dirname(dirname(__FILE__)) . '/' );
 require_once( ABSPATH . 'tmp/_fns.php' );
 
-$type = 'new_pct';
+$type = 'new_max_promised_amounts';
 
-$new_pct_data['referral']['first'] = 30;
-$new_pct_data['referral']['second'] = 0;
-$new_pct_data['referral']['third'] = 30;
-$new_pct_data['currency'][1]['miner_pct'] = '0.0000000760368';
-$new_pct_data['currency'][1]['user_pct'] = '0.0000000497405';;
-$new_pct_data['currency'][72]['miner_pct'] = '0.0000000760368';
-$new_pct_data['currency'][72]['user_pct'] = '0.0000000497405';
+$new_pct_data[22] = '1000';
+$new_pct_data[21] = '2000';
+$new_pct_data[72] = '11111';
+$new_pct_data[1] = '1';
 
 $time = '1426283721';
 // hash

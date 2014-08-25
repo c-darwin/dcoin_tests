@@ -3,15 +3,14 @@ define( 'DC', TRUE);
 define( 'ABSPATH', dirname(dirname(__FILE__)) . '/' );
 require_once( ABSPATH . 'tmp/_fns.php' );
 
-$type = 'new_pct';
+$type = 'change_primary_key';
 
-$new_pct_data['referral']['first'] = 30;
-$new_pct_data['referral']['second'] = 0;
-$new_pct_data['referral']['third'] = 30;
-$new_pct_data['currency'][1]['miner_pct'] = '0.0000000760368';
-$new_pct_data['currency'][1]['user_pct'] = '0.0000000497405';;
-$new_pct_data['currency'][72]['miner_pct'] = '0.0000000760368';
-$new_pct_data['currency'][72]['user_pct'] = '0.0000000497405';
+$bin_public_key_1 = hextobin('423423423');
+$bin_public_key_2 = hextobin('');
+$bin_public_key_3 = hextobin('');
+$bin_public_key_pack =  ParseData::encode_length_plus_data($bin_public_key_1) .
+	ParseData::encode_length_plus_data($bin_public_key_2) .
+	ParseData::encode_length_plus_data($bin_public_key_3);
 
 $time = '1426283721';
 // hash
@@ -22,8 +21,8 @@ $transaction_array[] =  ParseData::findType($type);
 $transaction_array[] = $time;
 // user_id
 $transaction_array[] = 1;
-// json data
-$transaction_array[] = json_encode($new_pct_data);
+// public_keys
+$transaction_array[] =  $bin_public_key_pack;
 // sign
 $transaction_array[] = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
 $block_data['block_id'] = 130005;

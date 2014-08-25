@@ -22,6 +22,8 @@ require_once( ABSPATH . 'tmp/_fns.php' );
 
 $db = new MySQLidb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
+$hashes_start = all_hashes();
+
 // hash
 $transaction_array[0] = '1111111111';
 // type
@@ -31,14 +33,12 @@ $transaction_array[2] = time();
 // user_id
 $transaction_array[3] = 1;
 // json data
-$transaction_array[4] = '{"currency":{"1":[0.0000000000000,0.0000000000000,1,0,0]},"referral":{"first":"29","second":"6","third":"13"}}';
+$transaction_array[4] = '{"currency":{"1":[0.0000000760368,0.0000000760368,1,0,0]},"referral":{"first":"29","second":"6","third":"13"}}';
 // sign
 $transaction_array[5] = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
 
-$block_data['block_id'] = 77952;
+$block_data['block_id'] = 100000;
 $block_data['time'] = time();
-
-$hash1 = hash_table_data($db, 'votes_referral').hash_table_data($db, 'votes_miner_pct').hash_table_data($db, 'votes_user_pct').hash_table_data($db, 'votes_max_promised_amount').hash_table_data($db, 'votes_max_other_currencies').hash_table_data($db, 'votes_reduction');
 
 $parsedata = new ParseData('', $db);
 $parsedata->transaction_array = $transaction_array;
@@ -52,8 +52,12 @@ $parsedata->votes_complex_init();
 	//$error = $parsedata->new_reduction_rollback_front();
 //}
 
-$hash2 = hash_table_data($db, 'votes_referral').hash_table_data($db, 'votes_miner_pct').hash_table_data($db, 'votes_user_pct').hash_table_data($db, 'votes_max_promised_amount').hash_table_data($db, 'votes_max_other_currencies').hash_table_data($db, 'votes_reduction');
-if ($hash1!=$hash2)
-	print 'ERROR';
+$hashes_end = all_hashes();
+foreach ($hashes_end as $table=>$hash) {
+	if ($hash!=$hashes_start[$table]) {
+		debug_print('ERROR in '.$table, __FILE__, __LINE__,  __FUNCTION__,  __CLASS__, __METHOD__);
+		print 'ERROR in '.$table;
+	}
+}
 
 ?>
