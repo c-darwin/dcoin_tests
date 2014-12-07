@@ -7,7 +7,7 @@ $type = 'cf_send_dc';
 
 $time = '1426283713';
 // hash
-$transaction_array[0] = '1111111111';
+$transaction_array[0] = '22cb812e53e22ee539af4a1d39b4596d';
 // type
 $transaction_array[1] =  ParseData::findType($type);
 // time
@@ -17,9 +17,9 @@ $transaction_array[3] = 1;
 //project_id
 $transaction_array[4] = 11;
 //amount
-$transaction_array[5] = 0.01;
+$transaction_array[5] = 100;
 //commission
-$transaction_array[6] = 0.01;
+$transaction_array[6] = 5;
 //comment
 $transaction_array[7] = 'ORDER #15155 авыАвыАывавы';
 // sign

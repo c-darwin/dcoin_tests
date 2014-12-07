@@ -23,6 +23,7 @@ $new_pct_data['currency'][2][1] = '0.0000000497405';
 $new_pct_data['currency'][2][2] = '1000';
 $new_pct_data['currency'][2][3] = '55';
 $new_pct_data['currency'][2][4] = '10';
+$new_pct_data['admin'] = 100;
 $time = '1426283722';
 // hash
 $transaction_array[] = '1111111111';
@@ -36,7 +37,7 @@ $transaction_array[] = 1;
 $transaction_array[] = json_encode($new_pct_data);
 // sign
 $transaction_array[] = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
-$block_data['block_id'] = 130006;
+$block_data['block_id'] = 160006;
 $block_data['time'] = $time;
 $block_data['user_id'] = 1;
 

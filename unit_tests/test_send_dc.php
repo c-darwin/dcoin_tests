@@ -6,12 +6,13 @@ require_once( ABSPATH . 'tmp/_fns.php' );
 $type = 'send_dc';
 
 $data = array(
-	array('user_id'=>1, 'to_user_id'=>2, 'amount'=>0.66, 'commission'=>0),
+	array('user_id'=>91573, 'to_user_id'=>91573, 'amount'=>100.66, 'commission'=>0.1),
+	/*array('user_id'=>1, 'to_user_id'=>2, 'amount'=>0.66, 'commission'=>0),
 	array('user_id'=>1, 'to_user_id'=>1, 'amount'=>6.66, 'commission'=>10000),
 	array('user_id'=>2, 'to_user_id'=>5, 'amount'=>0.01, 'commission'=>0),
 	array('user_id'=>4, 'to_user_id'=>9, 'amount'=>5.66, 'commission'=>0),
 	array('user_id'=>1, 'to_user_id'=>1, 'amount'=>1.66, 'commission'=>100),
-	array('user_id'=>1, 'to_user_id'=>2, 'amount'=>0.66, 'commission'=>0.01)
+	array('user_id'=>1, 'to_user_id'=>2, 'amount'=>0.66, 'commission'=>0.01)*/
 );
 $data_r = array_reverse($data, true);
 
@@ -21,7 +22,7 @@ foreach($data as $array) {
 
 	$time = '1426283713';
 	// hash
-	$transaction_array[0] = '1111111111';
+	$transaction_array[0] = '22cb812e53e22ee539af4a1d39b4596d';
 	// type
 	$transaction_array[1] =  ParseData::findType($type);
 	// time
@@ -48,7 +49,7 @@ foreach($data as $array) {
 	$parsedata = new ParseData('', $db);
 	$parsedata->transaction_array = $transaction_array;
 	$parsedata->block_data = $block_data;
-	$parsedata->tx_hash = '11111111111111111111';
+	$parsedata->tx_hash = md5(implode('', $transaction_array));
 	$init = $type.'_init';
 	$name = $type;
 	$error = $parsedata->$init();
@@ -69,7 +70,7 @@ foreach($data_r as $array) {
 
 	$time = '1426283713';
 	// hash
-	$transaction_array[0] = '1111111111';
+	$transaction_array[0] = '22cb812e53e22ee539af4a1d39b4596d';
 	// type
 	$transaction_array[1] =  ParseData::findType($type);
 	// time
@@ -96,7 +97,7 @@ foreach($data_r as $array) {
 	$parsedata = new ParseData('', $db);
 	$parsedata->transaction_array = $transaction_array;
 	$parsedata->block_data = $block_data;
-	$parsedata->tx_hash = '11111111111111111111';
+	$parsedata->tx_hash = md5(implode('', $transaction_array));
 	$init = $type.'_init';
 	$name = $type;
 	$error = $parsedata->$init();
